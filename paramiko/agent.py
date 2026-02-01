@@ -57,7 +57,8 @@ for key, value in list(ALGORITHM_FLAG_MAP.items()):
     ALGORITHM_FLAG_MAP[f"{key}-cert-v01@openssh.com"] = value
 
 
-# TODO 4.0: rename all these - including making some of their methods public?
+# TODO (backwards incompat): rename all these - including making some of their
+# methods public?
 class AgentSSH:
     def __init__(self):
         self._conn = None

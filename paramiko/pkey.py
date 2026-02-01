@@ -235,12 +235,12 @@ class PKey:
         """
         return [cls.name]
 
-    # TODO 4.0: make this and subclasses consistent, some of our own
-    # classmethods even assume kwargs we don't define!
-    # TODO 4.0: prob also raise NotImplementedError instead of pass'ing; the
-    # contract is pretty obviously that you need to handle msg/data/filename
-    # appropriately. (If 'pass' is a concession to testing, see about doing the
-    # work to fix the tests instead)
+    # TODO (backwards incompat): make this and subclasses consistent, some of
+    # our own classmethods even assume kwargs we don't define!
+    # TODO (backwards incompat): prob also raise NotImplementedError instead of
+    # pass'ing; the contract is pretty obviously that you need to handle
+    # msg/data/filename appropriately. (If 'pass' is a concession to testing,
+    # see about doing the work to fix the tests instead)
     def __init__(self, msg=None, data=None):
         """
         Create a new instance of this public key type.  If ``msg`` is given,
@@ -272,7 +272,7 @@ class PKey:
             comment = f", comment={self.comment!r}"
         return f"PKey(alg={self.algorithm_name}, bits={self.get_bits()}, fp={self.fingerprint}{comment})"  # noqa
 
-    # TODO 4.0: just merge into __bytes__ (everywhere)
+    # TODO (backwards incompat): just merge into __bytes__ (everywhere)
     def asbytes(self):
         """
         Return a string of an SSH `.Message` made up of the public part(s) of
@@ -331,8 +331,9 @@ class PKey:
 
         :return: bits in the key (as an `int`)
         """
-        # TODO 4.0: raise NotImplementedError, 0 is unlikely to ever be
-        # _correct_ and nothing in the critical path seems to use this.
+        # TODO (backwards incompat): raise NotImplementedError, 0 is unlikely
+        # to ever be _correct_ and nothing in the critical path seems to use
+        # this.
         return 0
 
     def can_sign(self):
@@ -477,7 +478,8 @@ class PKey:
         :raises: ``IOError`` -- if there was an error writing to the file
         :raises: `.SSHException` -- if the key is invalid
         """
-        # TODO 4.0: NotImplementedError (plus everywhere else in here)
+        # TODO (backwards incompat): NotImplementedError (plus everywhere else
+        # in here)
         raise Exception("Not implemented in PKey")
 
     def _read_private_key_file(self, tag, filename, password=None):

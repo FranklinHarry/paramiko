@@ -58,10 +58,10 @@ class BadAuthenticationType(AuthenticationException):
 
     allowed_types = []
 
-    # TODO 4.0: remove explanation kwarg
+    # TODO (backwards incompat): remove explanation kwarg
     def __init__(self, explanation, types):
-        # TODO 4.0: remove this supercall unless it's actually required for
-        # pickling (after fixing pickling)
+        # TODO (backwards incompat): remove this supercall unless it's actually
+        # required for pickling (after fixing pickling)
         AuthenticationException.__init__(self, explanation, types)
         self.explanation = explanation
         self.allowed_types = types
@@ -89,7 +89,7 @@ class PartialAuthentication(AuthenticationException):
         )
 
 
-# TODO 4.0: stop inheriting from SSHException, move to auth.py
+# TODO (backwards incompat): stop inheriting from SSHException, move to auth.py
 class UnableToAuthenticate(AuthenticationException):
     pass
 
@@ -145,9 +145,10 @@ class IncompatiblePeer(SSHException):
     .. versionadded:: 2.9
     """
 
-    # TODO 4.0: consider making this annotate w/ 1..N 'missing' algorithms,
-    # either just the first one that would halt kex, or even updating the
-    # Transport logic so we record /all/ that /could/ halt kex.
+    # TODO (backwards incompat): consider making this annotate w/ 1..N
+    # 'missing' algorithms, either just the first one that would halt kex, or
+    # even updating the Transport logic so we record /all/ that /could/ halt
+    # kex.
     # TODO: update docstrings where this may end up raised so they are more
     # specific.
     pass

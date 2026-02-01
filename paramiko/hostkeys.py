@@ -361,8 +361,9 @@ class HostKeyEntry:
         try:
             return cls(names, PKey.from_type_string(key_type, key_bytes))
         except UnknownKeyType:
-            # TODO 4.0: consider changing HostKeys API so this just raises
-            # naturally and the exception is muted higher up in the stack?
+            # TODO (backwards incompat): consider changing HostKeys API so this
+            # just raises naturally and the exception is muted higher up in the
+            # stack?
             log.info("Unable to handle key of type {}".format(key_type))
             return None
 

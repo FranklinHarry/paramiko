@@ -184,7 +184,7 @@ class Ed25519Key(PKey):
             v = self._verifying_key
         return (self.get_name(), v)
 
-    # TODO 4.0: remove
+    # TODO (backwards incompat): remove
     def get_name(self):
         return self.name
 

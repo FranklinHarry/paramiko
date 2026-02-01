@@ -1928,8 +1928,8 @@ class Transport(threading.Thread, ClosingContextManager):
 
     # internals...
 
-    # TODO 4.0: make a public alias for this because multiple other classes
-    # already explicitly rely on it...or just rewrite logging :D
+    # TODO (backwards incompat): make a public alias for this because multiple
+    # other classes already explicitly rely on it...or just rewrite logging :D
     def _log(self, level, msg, *args):
         if issubclass(type(msg), list):
             for m in msg:
@@ -3169,9 +3169,9 @@ class Transport(threading.Thread, ClosingContextManager):
     }
 
 
-# TODO 4.0: drop this, we barely use it ourselves, it badly replicates the
-# Transport-internal algorithm management, AND does so in a way which doesn't
-# honor newer things like disabled_algorithms!
+# TODO (backwards incompat): drop this, we barely use it ourselves, it badly
+# replicates the Transport-internal algorithm management, AND does so in a way
+# which doesn't honor newer things like disabled_algorithms!
 class SecurityOptions:
     """
     Simple object containing the security preferences of an ssh transport.
@@ -3324,10 +3324,12 @@ class ServiceRequestingTransport(Transport):
         # MSG_USERAUTH_REQUEST/ACCEPT/FAILURE set to this string, but that is a
         # different set of handlers, so...!
         if service != "ssh-userauth":
-            # TODO 4.0: consider erroring here (with an ability to opt out?)
-            # instead as it probably means something went Very Wrong.
             self._log(
-                DEBUG, 'Service request "{}" accepted (?)'.format(service)
+                # TODO (backwards incompat): consider erroring here (with an
+                # ability to opt out?) instead as it probably means something
+                # went Very Wrong.
+                DEBUG,
+                'Service request "{}" accepted (?)'.format(service),
             )
             return
         # Record that we saw a service-userauth acceptance, meaning we are free
@@ -3376,12 +3378,14 @@ class ServiceRequestingTransport(Transport):
         return AuthOnlyHandler(self)
 
     def auth_none(self, username):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         self.ensure_session()
         return self.auth_handler.auth_none(username)
 
     def auth_password(self, username, password, fallback=True):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         self.ensure_session()
         try:
             return self.auth_handler.auth_password(username, password)
@@ -3409,19 +3413,22 @@ class ServiceRequestingTransport(Transport):
                 raise e
 
     def auth_publickey(self, username, key):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         self.ensure_session()
         return self.auth_handler.auth_publickey(username, key)
 
     def auth_interactive(self, username, handler, submethods=""):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         self.ensure_session()
         return self.auth_handler.auth_interactive(
             username, handler, submethods
         )
 
     def auth_interactive_dumb(self, username, handler=None, submethods=""):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         # NOTE: legacy impl omitted equiv of ensure_session since it just wraps
         # another call to an auth method. however we reinstate it for
         # consistency reasons.
@@ -3442,7 +3449,8 @@ class ServiceRequestingTransport(Transport):
         return self.auth_interactive(username, handler, submethods)
 
     def auth_gssapi_with_mic(self, username, gss_host, gss_deleg_creds):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         self.ensure_session()
         self.auth_handler = self.get_auth_handler()
         return self.auth_handler.auth_gssapi_with_mic(
@@ -3450,7 +3458,8 @@ class ServiceRequestingTransport(Transport):
         )
 
     def auth_gssapi_keyex(self, username):
-        # TODO 4.0: merge to parent, preserving (most of) docstring
+        # TODO (backwards incompat): merge to parent, preserving (most of)
+        # docstring
         self.ensure_session()
         self.auth_handler = self.get_auth_handler()
         return self.auth_handler.auth_gssapi_keyex(username)

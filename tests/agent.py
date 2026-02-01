@@ -71,7 +71,8 @@ class AgentKey_:
 
     class get_bits:
         def defaults_to_superclass_implementation(self):
-            # TODO 4.0: assert raises NotImplementedError like changed parent?
+            # TODO (backwards incompat): assert raises NotImplementedError like
+            # changed parent?
             assert _BareAgentKey(None, None).get_bits() == 0
 
         def defers_to_inner_key_when_present(self, keys):

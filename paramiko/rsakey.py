@@ -103,7 +103,8 @@ class RSAKey(PKey):
 
     def __str__(self):
         # NOTE: see #853 to explain some legacy behavior.
-        # TODO 4.0: replace with a nice clean fingerprint display or something
+        # TODO (backwards incompat): replace with a nice clean fingerprint
+        # display or something
         return self.asbytes().decode("utf8", errors="ignore")
 
     @property

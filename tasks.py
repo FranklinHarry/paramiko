@@ -97,8 +97,8 @@ def guard(ctx, opts=""):
 # Until we stop bundling docs w/ releases. Need to discover use cases first.
 # TODO: would be nice to tie this into our own version of build() too, but
 # still have publish() use that build()...really need to try out classes!
-# TODO 4.0: I'd like to just axe the 'built docs in sdist', none of my other
-# projects do it.
+# TODO (backwards incompat): I'd like to just axe the 'built docs in sdist',
+# none of my other projects do it.
 @task
 def publish_(
     ctx, sdist=True, wheel=True, sign=False, dry_run=False, index=None

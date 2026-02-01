@@ -257,7 +257,7 @@ class AuthHandler:
                 e = AuthenticationException("Authentication failed.")
             # this is horrible.  Python Exception isn't yet descended from
             # object, so type(e) won't work. :(
-            # TODO 4.0: lol. just lmao.
+            # TODO (backwards incompat): lol. just lmao.
             if issubclass(e.__class__, PartialAuthentication):
                 return e.allowed_types
             raise e
@@ -734,9 +734,9 @@ Error Message: {}
 
     def _parse_userauth_failure(self, m):
         authlist = m.get_list()
-        # TODO 4.0: we aren't giving callers access to authlist _unless_ it's
-        # partial authentication, so eg authtype=none can't work unless we
-        # tweak this.
+        # TODO (backwards incompat): we aren't giving callers access to
+        # authlist _unless_ it's partial authentication, so eg authtype=none
+        # can't work unless we tweak this.
         partial = m.get_boolean()
         if partial:
             self._log(INFO, "Authentication continues...")
@@ -817,8 +817,8 @@ Error Message: {}
             self.auth_event.set()
         return
 
-    # TODO 4.0: MAY make sense to make these tables into actual
-    # classes/instances that can be fed a mode bool or whatever. Or,
+    # TODO (backwards incompat): MAY make sense to make these tables into
+    # actual classes/instances that can be fed a mode bool or whatever. Or,
     # alternately (both?) make the message types small classes or enums that
     # embed this info within themselves (which could also then tidy up the
     # current 'integer -> human readable short string' stuff in common.py).
@@ -828,9 +828,9 @@ Error Message: {}
     @property
     def _server_handler_table(self):
         return {
-            # TODO 4.0: MSG_SERVICE_REQUEST ought to eventually move into
-            # Transport's server mode like the client side did, just for
-            # consistency.
+            # TODO (backwards incompat): MSG_SERVICE_REQUEST ought to
+            # eventually move into Transport's server mode like the client side
+            # did, just for consistency.
             MSG_SERVICE_REQUEST: self._parse_service_request,
             MSG_USERAUTH_REQUEST: self._parse_userauth_request,
             MSG_USERAUTH_INFO_RESPONSE: self._parse_userauth_info_response,
@@ -1006,11 +1006,11 @@ class AuthOnlyHandler(AuthHandler):
         m.add_string(method)
         # Caller usually has more to say, such as injecting password, key etc
         finish_message(m)
-        # TODO 4.0: seems odd to have the client handle the lock and not
-        # Transport; that _may_ have been an artifact of allowing user
-        # threading event injection? Regardless, we don't want to move _this_
-        # locking into Transport._send_message now, because lots of other
-        # untouched code also uses that method and we might end up
+        # TODO (backwards incompat): seems odd to have the client handle the
+        # lock and not Transport; that _may_ have been an artifact of allowing
+        # user threading event injection? Regardless, we don't want to move
+        # _this_ locking into Transport._send_message now, because lots of
+        # other untouched code also uses that method and we might end up
         # double-locking (?) but 4.0 would be a good time to revisit.
         with self.transport.lock:
             self.transport._send_message(m)
