@@ -1,9 +1,9 @@
 from pathlib import Path
-from unittest.mock import patch, call
-
-from pytest import raises
+from unittest.mock import call, patch
 
 from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey
+from pytest import raises
+
 from paramiko import (
     ECDSAKey,
     Ed25519Key,
