@@ -2,7 +2,7 @@
 Changelog
 =========
 
-- :release:`5.0.0 <2026-03-30>`
+- :release:`5.0.0 <2026-05-09>`
 - :bug:`- major` Fix `Ed25519Key <paramiko.ed25519key.Ed25519Key>`'s internals
   such that it no longer throws `AttributeError` during calls to ``__repr__``
   when only partly initialized. This isn't a normal runtime problem (it only
